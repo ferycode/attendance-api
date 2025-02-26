@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "atd",
+    "password": "atd",
+    "database": "attendance_db",
+    "host": "mysql",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "atd",
+    "password": "atd",
+    "database": "attendance_db",
+    "host": "mysql",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "atd",
+    "password": "atd",
+    "database": "attendance_db",
+    "host": "mysql",
+    "port": 3306,
+    "dialect": "mysql"
+  }
+}

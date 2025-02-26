@@ -1,0 +1,44 @@
+{
+  "name": "attendance-api",
+  "version": "1.0.0",
+  "description": "API with MySQL and Elasticsearch",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "db:migrate": "docker exec -it attendance_api npx sequelize-cli --config config/database.json db:migrate",
+    "db:rollback": "docker exec -it attendance_api npx sequelize-cli --config config/database.json db:migrate:undo",
+    "raw:db:migrate": "npx sequelize-cli --config config/database.json db:migrate",
+    "raw:db:rollback": "npx sequelize-cli --config config/database.json db:migrate:undo"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.17.0",
+    "async-redis": "^2.0.0",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.3",
+    "chalk": "^4.1.2",
+    "cli-highlight": "^2.1.11",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "envoodoo": "^2.1.1",
+    "express": "^4.18.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.47",
+    "mysql2": "^3.6.1",
+    "nodemailer": "^6.10.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.1",
+    "sequelize": "^4.44.4",
+    "sequelize-cli": "^4.1.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "author": "Fery Dedi Supardi",
+  "license": "ISC"
+}
