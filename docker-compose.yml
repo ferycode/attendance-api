@@ -1,0 +1,87 @@
+services:
+  app:
+    build: .
+    container_name: attendance_api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      # Database
+      - DB_HOST=mysql
+      - DB_USER=atd
+      - DB_PASS=atd
+      - DB_NAME=attendance_db
+      - DB_PORT=3306
+      # Elasticsearch
+      - ES_NODES=http://elasticsearch:9200
+      - ES_MAX_RETRY=10
+      - ES_TIMEOUT_SECS=60000
+      - ES_NUM_SHARDS=1
+      - ES_NUM_REPLICAS=0
+      # Redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - mysql
+      - elasticsearch
+      - redis
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/src/app
+      - type: volume
+        source: node_modules
+        target: /usr/src/app/node_modules
+    networks:
+      - attendance-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: attendance_mysql
+    ports:
+      - "33306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=atd
+      - MYSQL_DATABASE=attendance_db
+      - MYSQL_USER=atd
+      - MYSQL_PASSWORD=atd
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - attendance-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    container_name: attendance_elasticsearch
+    ports:
+      - "39200:9200"
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - attendance-network
+
+  redis:
+    image: redis:alpine
+    container_name: attendance_redis
+    ports:
+      - "36379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - attendance-network
+
+networks:
+  attendance-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  elasticsearch_data:
+  redis_data:
+  node_modules:
