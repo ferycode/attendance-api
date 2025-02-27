@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 const { authenticate } = require(__base + 'lib/middleware/auth');
 
-router.get('/', require('./list'));
 router.post('/', require('./register'));
 router.post('/login', require('./login'));
 router.post('/logout', authenticate, require('./logout'));
