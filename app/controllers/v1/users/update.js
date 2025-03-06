@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     name: joi.string().optional().allow(null, ''),
     phone: joi.string().optional().allow(null, ''),
     address: joi.string().optional().allow(null, ''),
-    department: joi.string().valid(...Object.values(db.User.DEPARTMENT)).default(db.User.DEPARTMENT.OTHER),
+    department: joi.string().valid(...Object.values(db.User.DEPARTMENT)).optional().allow(null, ''),
   });
 
   try {

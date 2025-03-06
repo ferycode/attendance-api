@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
     name: joi.string().optional().allow(null, ''),
     phone: joi.string().optional().allow(null, ''),
     address: joi.string().optional().allow(null, ''),
-    department: joi.string().valid(...Object.values(db.User.DEPARTMENT)).default(db.User.DEPARTMENT.OTHER),
+    department: joi.string().valid(...Object.values(db.User.DEPARTMENT)).optional().allow(null, ''),
   });
 
   try {
@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
     }
 
     const password = await bcrypt.hash(params.password, 10);
-    const registerUser = await db.User.create({ email: params.email, password });
+    const registerUser = await db.User.create({ ...params, password });
 
     if (!registerUser) {
       throw new Error('Unable to register user');

@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
     name: joi.string().optional(),
     email: joi.string().email().optional(),
     phone: joi.string().optional(),
-    department: joi.string().valid(...Object.values(db.User.DEPARTMENT)).default(db.User.DEPARTMENT.OTHER),
+    department: joi.string().valid(...Object.values(db.User.DEPARTMENT)).optional(),
     page: joi.number().integer().min(1).default(1),
     perPage: joi.number().integer().min(1).default(50)
   });
@@ -90,6 +90,9 @@ module.exports = async (req, res, next) => {
         unlimited: false
       });
     }
+
+    console.log(JSON.stringify(conditions, null, 2), '-- conditions --');
+    console.log('app/controllers/v1/reports/attendances.js:94');
 
     const [rows, count] = await Promise.all([
       Attendances.findAll({ 
