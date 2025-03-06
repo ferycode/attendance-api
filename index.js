@@ -10,6 +10,7 @@ envoodoo(e => {
   const ElasticClient = require('./lib/elasticsearch/search');
   const log = require('./lib/winston/logger');
   const requestLogger = require('./lib/middleware/request-logger');
+  const errorHandler = require('./lib/middleware/error-handler');
   const queueProcessor = require('./lib/redis/queue-processor');
 
   const app = express();
@@ -53,6 +54,8 @@ envoodoo(e => {
       author: 'Fery Dedi Supardi',
     });
   });
+
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     log.info(`Server is running on port ${PORT}`);
